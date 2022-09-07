@@ -8,21 +8,7 @@ from db.base import DB, TableCreateMixin, SelectMixin, InsertMixin, UpdateMixin,
 from db.postgres.columns import Int, Char, Bool
 
 
-# Принцип разделения интерфейсов
-# Пример сборки классов с разными интерфейсами
 class PGBase(DB, TableCreateMixin, SelectMixin, InsertMixin, UpdateMixin, DeleteMixin, ABC):
-    pass
-
-
-class MySQLBase(DB, TableCreateMixin, SelectMixin, InsertMixin, UpdateMixin, DeleteMixin, ABC):
-    pass
-
-
-class MongoBase(DB, SelectMixin, InsertMixin, UpdateMixin, DeleteMixin, ABC):
-    pass
-
-
-class RedisBase(DB, SelectMixin, InsertMixin, DeleteMixin, ABC):
     pass
 
 
