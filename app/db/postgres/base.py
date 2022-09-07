@@ -12,7 +12,7 @@ class PGBase(DB, TableCreateMixin, SelectMixin, InsertMixin, UpdateMixin, Delete
     pass
 
 
-class PG(PGBase, ABC):
+class PG(PGBase):
     def __init__(self, host: str,
                  port: str,
                  password: str,
