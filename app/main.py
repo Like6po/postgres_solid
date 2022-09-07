@@ -3,6 +3,7 @@ import os
 from db.postgres.columns import Char, Int, Bool
 from db.postgres.postgres_11 import PG11
 from db.postgres.postgres_14 import PG14
+from db.postgres.schemas import Data, Condition
 
 
 def test_pg14():
@@ -26,23 +27,23 @@ def test_pg14():
 
         # Вставка элемента
         pg14.insert("test",
-                    {"identifier": 1,
-                     "name": "Ivan",
-                     "is_active": True})
+                    [Data(name="identifier", value=1),
+                     Data(name="name", value="Ivan"),
+                     Data(name="is_active", value=True)])
 
         result = pg14.select("test", ["*"])
         assert result == [[1, 'Ivan                                                            ', True]]
 
         # Обновление элемента
         pg14.update("test",
-                    {"name": "Danya",
-                     "is_active": False},
-                    {"identifier": 1})
+                    [Data(name="name", value="Danya"),
+                     Data(name="is_active", value=False)],
+                    [Condition(name="identifier", value=1)])
         result = pg14.select("test", ["*"])
         assert result == [[1, 'Danya                                                           ', False]]
 
         # Удаление элемента
-        pg14.delete("test", {"identifier": 1})
+        pg14.delete("test", [Condition(name="identifier", value=1)])
         result = pg14.select("test", ["*"])
         assert result == []
 
@@ -71,23 +72,23 @@ def test_pg11():
 
         # Вставка элемента
         pg11.delete("test",
-                    {"identifier": 1,
-                     "name": "Ivan",
-                     "is_active": True})
+                    [Data(name="identifier", value=1),
+                     Data(name="name", value="Ivan"),
+                     Data(name="is_active", value=True)])
 
         result = pg11.select("test", ["*"])
         assert result == [[1, 'Ivan                                                            ', True]]
 
         # Обновление элемента
         pg11.update("test",
-                    {"name": "Danya",
-                     "is_active": False},
-                    {"identifier": 1})
+                    [Data(name="name", value="Danya"),
+                     Data(name="is_active", value=False)],
+                    [Condition(name="identifier", value=1)])
         result = pg11.select("test", ["*"])
         assert result == [[1, 'Danya                                                           ', False]]
 
         # Удаление элемента
-        pg11.insert("test", {"identifier": 1})
+        pg11.insert("test", [Condition(name="identifier", value=1)])
         result = pg11.select("test", ["*"])
         assert result == []
 
