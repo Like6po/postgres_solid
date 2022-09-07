@@ -1,0 +1,44 @@
+version: '3.3'
+
+services:
+  postgres_14:
+    image: postgres:14.3
+    container_name: postgres_14
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: GfVtvB3EqAS5R94Qwrq8kXqRfmAePZlbDVMnLexSOFmam0Btef
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+    ports:
+      - "5433:5433"
+
+
+  postgres_11:
+    image: postgres:11.16
+    container_name: postgres_11
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: GfVtvB3EqAS5R94Qwrq8kXqRfmAePZlbDVMnLexSOFmam0Btef
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+
+  app:
+    container_name: app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: python  main.py
+    environment:
+      DB_HOST_11: postgres_11
+      DB_HOST_14: postgres_14
+      DB_PORT: 5432
+      DB_PASSWORD: GfVtvB3EqAS5R94Qwrq8kXqRfmAePZlbDVMnLexSOFmam0Btef
+      DB_USER: user
+      DB_NAME: db
+    depends_on:
+      - postgres_11
+      - postgres_14
