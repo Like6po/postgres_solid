@@ -18,6 +18,13 @@ class PG(PGBase):
                  password: str,
                  user: str,
                  dbname: str):
+        """
+        :param host: DB IP
+        :param port: DB Port
+        :param password: DB Password
+        :param user: DB user name
+        :param dbname: DB name
+        """
         super().__init__()
         self.host = host
         self.port = port
@@ -51,8 +58,10 @@ class PG(PGBase):
                 raise
 
     def is_life(self) -> bool:
-        return bool(self.execute("SELECT 1",
-                                 fetchone=True))
+        if self.con:
+            return bool(self.execute("SELECT 1",
+                                     fetchone=True))
+        return False
 
     def create_table(self, name: str, variables: List[Union[Int, Char, Bool]]):
         with self.con.cursor(cursor_factory=DictCursor) as cursor:

@@ -12,6 +12,9 @@ class ColumnType(ABC):
 
     @abstractmethod
     def as_sql(self):
+        """
+        Method to represent column data in SQL
+        """
         raise NotImplementedError
 
 
