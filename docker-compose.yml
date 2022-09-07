@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_DB: db
     ports:
-      - "5433:5433"
+      - "5433:5432"
 
 
   postgres_11:
